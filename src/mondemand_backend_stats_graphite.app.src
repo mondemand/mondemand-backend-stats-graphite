@@ -1,0 +1,10 @@
+{ application, mondemand_backend_stats_graphite,
+  [
+    { description,"A plugin for the mondemand server to send stats to graphite"},
+    { vsn,"0.0.0"},
+    { modules,[]},
+    { registered,[]},
+    { applications, [kernel,stdlib]},
+    { env, [] }
+  ]
+}.
