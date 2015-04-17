@@ -14,7 +14,7 @@
 %% mondemand_backend_stats_handler callbacks
 -export ([ header/0,
            separator/0,
-           format_stat/8,
+           format_stat/10,
            footer/0,
            handle_response/2
          ]).
@@ -71,7 +71,7 @@ header () -> "".
 
 separator () -> "\n".
 
-format_stat (Prefix, ProgId, Host,
+format_stat (_Num, _Total, Prefix, ProgId, Host,
              MetricType, MetricName, MetricValue, Timestamp, Context) ->
   ActualPrefix = case Prefix of undefined -> ""; _ -> [ Prefix, "." ] end,
   [ ActualPrefix,

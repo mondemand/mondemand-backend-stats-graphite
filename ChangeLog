@@ -1,2 +1,5 @@
+* Wed Apr 01 2015 Anthony Molinaro <anthonym@alumni.caltech.edu> 0.1.0
+- update to deal with mondemand_server_stats_handler changes
+
 * Thu Apr 24 2014 Anthony Molinaro <anthonym@alumni.caltech.edu> 0.0.0
 - initial version
