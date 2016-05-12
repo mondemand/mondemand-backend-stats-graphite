@@ -42,7 +42,8 @@ type () ->
 %% supervisor callbacks
 %%====================================================================
 init ([Config]) ->
-  Number = proplists:get_value (number, Config, 16), % FIXME: replace default
+  % default to one process per scheduler
+  Number = proplists:get_value (number, Config, erlang:system_info(schedulers)),
 
   { ok,
     {
@@ -74,17 +75,21 @@ separator () -> "\n".
 format_stat (_Num, _Total, Prefix, ProgId, Host,
              MetricType, MetricName, MetricValue, Timestamp, Context) ->
   ActualPrefix = case Prefix of undefined -> ""; _ -> [ Prefix, "." ] end,
-  [ ActualPrefix,
-    ProgId, ".",
-    MetricName, ".",
-    normalize(Host),
-    case Context of
-      [] -> "";
-      L -> [".", mondemand_server_util:join ([[K,"=",V] || {K, V} <- L ], ".")]
-    end,
-    ".type=", MetricType,
-    io_lib:fwrite (" ~b ~b", [MetricValue, Timestamp])
-  ].
+  { ok,
+    [ ActualPrefix,
+      ProgId, ".",
+      MetricName, ".",
+      normalize(Host),
+      case Context of
+        [] -> "";
+        L -> [".", mondemand_server_util:join ([[K,"=",V] || {K, V} <- L ], ".")]
+      end,
+      ".type=", atom_to_list (MetricType),
+      io_lib:fwrite (" ~b ~b", [MetricValue, Timestamp])
+    ],
+    1,
+    0
+  }.
 
 footer () -> "\n".
 
