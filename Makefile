@@ -17,4 +17,4 @@ maintainer-clean:
 	@rebar clean
 	@rebar delete-deps
 	@rm -rf deps
-	@rm -rf logs
+	@rm -rf log
